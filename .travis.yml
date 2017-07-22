@@ -7,5 +7,3 @@ install:
 script:
   - msbuild /p:Configuration=Release WealthFarm.SparkPost.sln
   - dotnet pack --include-symbols -c Release
-deploy:
-  skip_cleanup: true
