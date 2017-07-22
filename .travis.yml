@@ -7,7 +7,7 @@ install:
   - dotnet restore
 script:
   - msbuild /p:Configuration=Release WealthFarm.SparkPost.sln
-  - mono ./testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ./WealthFarm.SparkPost.Tests/bin/Release/netcoreapp1.0/WealthFarm.SparkPost.Tests.dll
+  - mono ./testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ./src/WealthFarm.SparkPost.Tests/bin/Release/netcoreapp1.0/WealthFarm.SparkPost.Tests.dll
   - dotnet pack --include-symbols -c Release
 deploy:
   skip_cleanup: true
