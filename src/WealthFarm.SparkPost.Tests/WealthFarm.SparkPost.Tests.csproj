@@ -14,6 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\WealthFarm.SparkPost\WealthFarm.SparkPost.csproj" />
+    <ProjectReference Include="..\WealthFarm.SparkPost\WealthFarm.SparkPost.csproj" />
   </ItemGroup>
 </Project>
