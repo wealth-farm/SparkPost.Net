@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace WealthFarm.SparkPost.Client
 {
@@ -23,7 +25,14 @@ namespace WealthFarm.SparkPost.Client
                 UseProxy = config.Proxy != null
             };
 
-            Http = new HttpClient { BaseAddress = config.Endpoint };
+            Http = new HttpClient
+            {
+                BaseAddress = config.Endpoint,
+                DefaultRequestHeaders = 
+                {
+                    Authorization = new AuthenticationHeaderValue(string.Empty, config.ApiKey)
+                }
+            };
         }
 
         /// <summary>
