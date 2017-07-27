@@ -1,9 +1,10 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using WealthFarm.SparkPost.Client;
+using WealthFarm.SparkPost.Exceptions;
 
 namespace WealthFarm.SparkPost.Transmission
 {
@@ -29,29 +30,23 @@ namespace WealthFarm.SparkPost.Transmission
         /// <param name="client">The client.</param>
         /// <param name="transmisison">The transmisison.</param>
         /// <param name="maxRecipientErrors">The max number of recipient errors.</param>
-        public static async Task CreateTransmission(this IClient client, Transmission transmisison, int? maxRecipientErrors = null)
+        public static async Task<TransmissionResult> CreateTransmission(this IClient client, Transmission transmisison, int? maxRecipientErrors = null)
         {
-            //         var uri = new Uri($"{TransmissionPath}?num_rcpt_errors={maxRecipientErrors}");
-            //         var response = await client.Http.PostAsync(uri, transmisison.ToJsonContent());
+            var request = new Request
+            {
+                Uri = new Uri($"{TransmissionPath}?num_rcpt_errors={maxRecipientErrors}"),
+                Method = HttpMethod.Post,
+                Content = transmisison.ToJsonContent()
+            };
 
-            //using (var stream = await response.Content.ReadAsStreamAsync())
-            //using (var reader = new JsonTextReader(new StreamReader(stream)))
-            //{
-            //	var serializer = new JsonSerializer();
+            var response = await client.SendAsync(request);
 
-            //	//if (response.IsSuccessStatusCode)
-            //	//{
-            //	//	return serializer.Deserialize<Account>(reader);
-            //	//}
-            //	//else if (response.StatusCode == HttpStatusCode.NotFound)
-            //	//{
-            //	//	return null;
-            //	//}
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                throw new SparkPostException("Get account failed", (int)response.StatusCode, response.Errors);
+            }
 
-            //	//var error = serializer.Deserialize<ErrorResponse>(reader);
-            //	//throw new SparkPostException("Get account failed", (int)response.StatusCode, error.Errors);
-            //}
-            throw new NotImplementedException();
+            return await response.ReadContentAsync<TransmissionResult>();
         }
     }
 }
