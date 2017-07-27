@@ -1,9 +1,7 @@
 ﻿﻿using System;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using WealthFarm.SparkPost.Client;
 using WealthFarm.SparkPost.Exceptions;
 
@@ -24,26 +22,23 @@ namespace WealthFarm.SparkPost
         /// <param name="includeUsage">If set to <c>true</c> include usage details.</param>
         public static async Task<Account> GetAccountAsync(this IClient client, bool includeUsage = false)
         {
-            var uri = new Uri($"{AccountPath}?usage={includeUsage}");
-            var response = await client.Http.GetAsync(uri);
+            var request = new Request
+            {
+                Method = HttpMethod.Get,
+                Uri = new Uri($"{AccountPath}?usage={includeUsage}")
+            };
 
-            using (var stream = await response.Content.ReadAsStreamAsync())
-			using (var reader = new JsonTextReader(new StreamReader(stream)))
-			{
-				var serializer = new JsonSerializer();
+            var response = await client.SendAsync(request);
 
-				if (response.IsSuccessStatusCode)
-				{
-                    return serializer.Deserialize<Account>(reader);
-                } 
-                else if (response.StatusCode == HttpStatusCode.NotFound)
-                {
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.OK:
+                    return await response.ReadContentAsync<Account>();
+                case HttpStatusCode.NotFound:
                     return null;
-                }
-
-                var error = serializer.Deserialize<ErrorResponse>(reader);
-                throw new SparkPostException("Get account failed", (int)response.StatusCode, error.Errors); 
-			}
+                default:
+                    throw new SparkPostException("Get account failed", (int)response.StatusCode, response.Errors);
+            }
         }
 
 		/// <summary>
@@ -66,18 +61,18 @@ namespace WealthFarm.SparkPost
 		/// <param name="account">Updated Account.</param>
 		public static async Task UpdateAccountAsync(this IClient client, Account account)
         {
-			var uri = new Uri(AccountPath);
-            var response = await client.Http.PutAsync(uri, account.ToJsonContent());
-
-			if (!response.IsSuccessStatusCode)
+			var request = new Request
 			{
-				using (var stream = await response.Content.ReadAsStreamAsync())
-				using (var reader = new JsonTextReader(new StreamReader(stream)))
-				{
-					var serializer = new JsonSerializer();
-					var error = serializer.Deserialize<ErrorResponse>(reader);
-					throw new SparkPostException("Get account failed", (int)response.StatusCode, error.Errors);
-				}	
+                Method = HttpMethod.Put,
+				Uri = new Uri(AccountPath),
+                Content = account.ToJsonContent()
+			};
+
+			var response = await client.SendAsync(request);
+
+            if (response.StatusCode != HttpStatusCode.OK)
+			{
+				throw new SparkPostException("Get account failed", (int)response.StatusCode, response.Errors);
 			}
         }
 

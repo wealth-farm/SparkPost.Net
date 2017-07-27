@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace WealthFarm.SparkPost.Client
 {
@@ -14,9 +15,11 @@ namespace WealthFarm.SparkPost.Client
 		Configuration Configuration { get; }
 
         /// <summary>
-        /// Gets the client HTTP client.
+        /// Sends a client request.
         /// </summary>
-        /// <value>The HTTP client.</value>
-        HttpClient Http { get; }
+        /// <returns>A client response.</returns>
+        /// <param name="request">The request.</param>
+        /// <typeparam name="IContentType">The response entity type.</typeparam>
+        Task<Response> SendAsync(Request request);
     }
 }

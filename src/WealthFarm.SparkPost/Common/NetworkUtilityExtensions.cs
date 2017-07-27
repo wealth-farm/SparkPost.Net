@@ -17,6 +17,11 @@ namespace WealthFarm.SparkPost
 		/// <param name="entity">Entity.</param>
 		public static StringContent ToJsonContent(this object entity)
         {
+            if (entity == null)
+            {
+                return null;    
+            }
+
             return new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
         }
     }
