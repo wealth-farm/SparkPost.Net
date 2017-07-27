@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿﻿﻿using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -63,9 +63,9 @@ namespace WealthFarm.SparkPost
         {
 			var request = new Request
 			{
-                Method = HttpMethod.Put,
+				Method = HttpMethod.Put,
 				Uri = new Uri(AccountPath),
-                Content = account.ToJsonContent()
+				Content = account.ToJsonContent()
 			};
 
 			var response = await client.SendAsync(request);
