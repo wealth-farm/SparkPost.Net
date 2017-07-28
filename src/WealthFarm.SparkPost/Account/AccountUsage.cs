@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+
 namespace WealthFarm.SparkPost
 {
     /// <summary>
@@ -16,12 +18,14 @@ namespace WealthFarm.SparkPost
 		/// Gets or sets the day.
 		/// </summary>
 		/// <value>Daily usage report.</value>
+		[JsonProperty("account_usage_period")]
 		public AccountUsagePeriod Day { get; set; }
 
         /// <summary>
         /// Gets or sets the month.
         /// </summary>
         /// <value>Monthly usage report.</value>
+        [JsonProperty("account_usage_period")]
         public AccountUsagePeriod Month { get; set; }
     }
 }

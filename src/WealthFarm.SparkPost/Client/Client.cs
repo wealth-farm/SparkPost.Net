@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
-namespace WealthFarm.SparkPost.Client
+namespace WealthFarm.SparkPost
 {
     /// <summary>
     /// SparkPost API client.
@@ -14,6 +14,7 @@ namespace WealthFarm.SparkPost.Client
     {
         private readonly Configuration _config;
         private readonly HttpClient _http;
+	    private readonly JsonSerializer _serializer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:WealthFarm.SparkPost.Client.Client"/> class.
@@ -22,6 +23,14 @@ namespace WealthFarm.SparkPost.Client
         public Client(Configuration config)
         {
             _config = config;
+	        _serializer = new JsonSerializer
+	        {
+		        NullValueHandling = NullValueHandling.Ignore,
+		        ContractResolver = new DefaultContractResolver
+		        {
+					NamingStrategy = new SnakeCaseNamingStrategy()
+				}
+	        };
 
             var handler = new HttpClientHandler
             {
@@ -29,14 +38,9 @@ namespace WealthFarm.SparkPost.Client
                 UseProxy = config.Proxy != null
             };
 
-            _http = new HttpClient
-            {
-                BaseAddress = config.Endpoint,
-                DefaultRequestHeaders = 
-                {
-                    Authorization = new AuthenticationHeaderValue(string.Empty, config.ApiKey)
-                }
-            };
+            _http = new HttpClient(handler);
+            _http.BaseAddress = config.Endpoint;
+            _http.DefaultRequestHeaders.Add("Authorization", config.ApiKey);
         }
 
         /// <summary>
@@ -68,8 +72,7 @@ namespace WealthFarm.SparkPost.Client
 				using (var stream = await response.Content.ReadAsStreamAsync())
 				using (var reader = new JsonTextReader(new StreamReader(stream)))
 				{
-				    var serializer = new JsonSerializer();
-					var error = serializer.Deserialize<ErrorResponse>(reader);
+					var error = _serializer.Deserialize<ErrorResponse>(reader);
                     result.WithErrors(error.Errors);
 			    }
 			}

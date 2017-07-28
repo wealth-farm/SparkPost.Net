@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using WealthFarm.SparkPost.Client;
 using WealthFarm.SparkPost.Exceptions;
 
 namespace WealthFarm.SparkPost.Transmission
@@ -20,7 +19,7 @@ namespace WealthFarm.SparkPost.Transmission
 
 		private static Transmission WithRecipientList(this Transmission transmission, string listId)
 		{
-            transmission.Recipients = new RecipientList { ListId = listId };
+		    transmission.Recipients = new RecipientList { ListId = listId };
 			return transmission;
 		}
 

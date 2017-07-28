@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Net;
 
-namespace WealthFarm.SparkPost.Client
+namespace WealthFarm.SparkPost
 {
     /// <summary>
     /// SparkPost client configuration.
     /// </summary>
     public sealed class Configuration
     {
-        private const string SparkPostEndpoint = "https://api.sparkpost.com/api/v1";
+        private const string SparkPostEndpoint = "https://api.sparkpost.com";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:WealthFarm.SparkPost.Client.Configuration"/> class.

@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using WealthFarm.SparkPost.Client;
 using WealthFarm.SparkPost.Exceptions;
 
 namespace WealthFarm.SparkPost
@@ -12,7 +11,7 @@ namespace WealthFarm.SparkPost
     /// </summary>
     public static class AccountExtensions
     {
-        private const string AccountPath = "/account";
+        private const string AccountPath = "/api/v1/account";
 
         /// <summary>
         /// Retrieve account information.
@@ -25,20 +24,18 @@ namespace WealthFarm.SparkPost
             var request = new Request
             {
                 Method = HttpMethod.Get,
-                Uri = new Uri($"{AccountPath}?usage={includeUsage}")
+                Uri = new Uri(client.Configuration.Endpoint, $"{AccountPath}?usage={includeUsage}")
             };
 
             var response = await client.SendAsync(request);
 
-            switch (response.StatusCode)
+            if (response.StatusCode != HttpStatusCode.OK)
             {
-                case HttpStatusCode.OK:
-                    return await response.ReadContentAsync<Account>();
-                case HttpStatusCode.NotFound:
-                    return null;
-                default:
-                    throw new SparkPostException("Get account failed", (int)response.StatusCode, response.Errors);
+				throw new SparkPostException("Get account failed", (int)response.StatusCode, response.Errors);
             }
+	        
+	        var result = await response.ReadContentAsync<SingleResult<Account>>();
+	        return result.Results;
         }
 
 		/// <summary>
@@ -64,7 +61,7 @@ namespace WealthFarm.SparkPost
 			var request = new Request
 			{
 				Method = HttpMethod.Put,
-				Uri = new Uri(AccountPath),
+				Uri = new Uri(client.Configuration.Endpoint, AccountPath),
 				Content = account.ToJsonContent()
 			};
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+
 namespace WealthFarm.SparkPost
 {
     /// <summary>
@@ -10,26 +11,30 @@ namespace WealthFarm.SparkPost
 		/// Gets or sets the SMTP tracking default.
 		/// </summary>
 		/// <value>Account-level default for SMTP engagement tracking.</value>
-		public bool SmtpTrackingDefault { get; set; }
+		[JsonProperty("smtp_tracking_default")]
+		public bool? SmtpTrackingDefault { get; set; }
 
 		/// <summary>
 		/// Gets or sets the rest tracking default.
 		/// </summary>
 		/// <value>Account-level default for REST API engagement tracking.</value>
-		public bool RestTrackingDefault { get; set; }
+		[JsonProperty("rest_tracking_default")]
+		public bool? RestTrackingDefault { get; set; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="T:WealthFarm.SparkPost.AccountOptions"/>
 		/// transactional unsub.
 		/// </summary>
 		/// <value><c>true</c> to include List-Unsubscribe header for all transactional messages by default.</value>
-		public bool TransactionalUnsub { get; set; }
+		[JsonProperty("transactional_unsub")]
+		public bool? TransactionalUnsub { get; set; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="T:WealthFarm.SparkPost.AccountOptions"/>
 		/// transactional default.
 		/// </summary>
 		/// <value><c>true</c> to send messages as transactional by default.</value>
-		public bool TransactionalDefault { get; set; }
+		[JsonProperty("transactional_default")]
+		public bool? TransactionalDefault { get; set; }
 	}
 }

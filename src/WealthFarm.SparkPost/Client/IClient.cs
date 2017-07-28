@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace WealthFarm.SparkPost.Client
+namespace WealthFarm.SparkPost
 {
     /// <summary>
     /// Interface for SparkPost client implementations.

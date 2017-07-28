@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+
 namespace WealthFarm.SparkPost
 {
     /// <summary>
@@ -22,18 +24,21 @@ namespace WealthFarm.SparkPost
         /// Gets or sets the plan volume.
         /// </summary>
         /// <value>The plan volume.</value>
+        [JsonProperty("plan_volume")]
         public int PlanVolume { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="T:WealthFarm.SparkPost.Subscription"/> self serve.
         /// </summary>
         /// <value><c>true</c> if self serve; otherwise, <c>false</c>.</value>
-        public bool SelfServe { get; set; }
+        [JsonProperty("self_serve")]
+        public bool? SelfServe { get; set; }
 
         /// <summary>
         /// Gets or sets the effective date.
         /// </summary>
         /// <value>The effective date.</value>
+        [JsonProperty("effective_date")]
         public DateTime EffectiveDate { get; set; }
     }
 }

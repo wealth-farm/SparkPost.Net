@@ -1,5 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard1.1</TargetFramework>
     <PackOnBuild>true</PackOnBuild>
@@ -8,13 +7,13 @@
     <Authors>Wealth Farm, Daniel Merritt</Authors>
     <Description>A .NET client library for SparkPost.</Description>
   </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DefineConstants>TRACE;DEBUG;NETSTANDARD1_1</DefineConstants>
     <DocumentationFile>bin\Debug\netstandard1.1\WealthFarm.SparkPost.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType></DebugType>
+    <DebugType>
+    </DebugType>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Errors\" />

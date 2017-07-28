@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading;
 
-namespace WealthFarm.SparkPost.Client
+namespace WealthFarm.SparkPost
 {
     public class Request
     {
