@@ -3,8 +3,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
 
-using WealthFarm.SparkPost;
-
 namespace WealthFarm.SparkPost.Tests.Integegration
 {
     public class Account : BaseTest
@@ -13,7 +11,7 @@ namespace WealthFarm.SparkPost.Tests.Integegration
         public async Task GetAccount()
         {
             var account = await Client.GetAccountAsync();
-    
+
             account.Should().NotBeNull();
             account.CompanyName.Should().NotBeNull();
             account.CountryCode.Should().NotBeNull();

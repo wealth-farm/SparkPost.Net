@@ -1,5 +1,4 @@
-﻿using System;
-namespace WealthFarm.SparkPost.Transmission
+﻿namespace WealthFarm.SparkPost.Transmission
 {
     public class Address
     {

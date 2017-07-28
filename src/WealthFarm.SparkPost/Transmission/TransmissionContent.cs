@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace WealthFarm.SparkPost.Transmission
 {
@@ -13,5 +12,5 @@ namespace WealthFarm.SparkPost.Transmission
         public string Text { get; set; }
         public string TemplateId { get; set; }
         public bool UseDraftTemplate { get; set; }
-	}
+    }
 }
