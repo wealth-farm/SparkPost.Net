@@ -67,14 +67,12 @@ namespace WealthFarm.SparkPost
             var result = new Response(response.StatusCode, response.Content);
 
             if (!response.IsSuccessStatusCode && response.StatusCode != HttpStatusCode.NotFound)
-            {
                 using (var stream = await response.Content.ReadAsStreamAsync())
                 using (var reader = new JsonTextReader(new StreamReader(stream)))
                 {
                     var error = _serializer.Deserialize<ErrorResponse>(reader);
                     result.WithErrors(error.Errors);
                 }
-            }
 
             return result;
         }

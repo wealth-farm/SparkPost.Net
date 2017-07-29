@@ -11,12 +11,24 @@ namespace WealthFarm.SparkPost.Transmission
     {
         private const string TransmissionPath = "/transmission";
 
+        /// <summary>
+        ///     Sets the recipients for a transmission.
+        /// </summary>
+        /// <param name="transmission">The transmission.</param>
+        /// <param name="recipients">A list of recipients.</param>
+        /// <returns>The transmission instance, which can be used for chaining.</returns>
         private static Transmission WithRecipients(this Transmission transmission, IEnumerable<Recipient> recipients)
         {
             transmission.Recipients = recipients;
             return transmission;
         }
 
+        /// <summary>
+        ///     Sets the ID of the stored recipient list to use.
+        /// </summary>
+        /// <param name="transmission">The transmission.</param>
+        /// <param name="listId">The recipient list ID.</param>
+        /// <returns>The transmission instance, which can be used for chaining.</returns>
         private static Transmission WithRecipientList(this Transmission transmission, string listId)
         {
             transmission.Recipients = new RecipientList {ListId = listId};
