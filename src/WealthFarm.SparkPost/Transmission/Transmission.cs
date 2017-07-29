@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace WealthFarm.SparkPost.Transmission
+namespace WealthFarm.SparkPost
 {
     /// <summary>
     ///     A transmission is a collection of messages belonging to the same campaign.
@@ -18,6 +18,7 @@ namespace WealthFarm.SparkPost.Transmission
 	    /// </summary>
 	    /// <remarks>The maximum allowable length is 1024 bytes.</remarks>
 	    /// <exception cref="ArgumentException">Thrown if value is longer the 1024 bytes.</exception>
+	    [JsonProperty("description")]
 	    public string Description
         {
             get => _description;
@@ -51,6 +52,7 @@ namespace WealthFarm.SparkPost.Transmission
 	    /// <summary>
 	    ///     Gets or sets the transmission options.
 	    /// </summary>
+	    [JsonProperty("options")]
 	    public TransmissionOptions Options { get; set; }
 
 	    /// <summary>
@@ -63,6 +65,7 @@ namespace WealthFarm.SparkPost.Transmission
 	    /// <summary>
 	    ///     Gets or sets metadata.
 	    /// </summary>
+	    [JsonProperty("metadata")]
 	    public IDictionary<string, object> Metadata { get; set; }
 
 	    /// <summary>
@@ -79,11 +82,13 @@ namespace WealthFarm.SparkPost.Transmission
 	    ///     Transmissions to a recipient list should contain a <see cref="RecipientList" />
 	    ///     object. Individual recipients can be speicified by using a list of <see cref="Recipient" />s.
 	    /// </remarks>
+	    [JsonProperty("recipients")]
 	    public object Recipients { get; internal set; }
 
 	    /// <summary>
 	    ///     Gets or sets the content.
 	    /// </summary>
+	    [JsonProperty("content")]
 	    public TransmissionContent Content { get; set; }
     }
 }

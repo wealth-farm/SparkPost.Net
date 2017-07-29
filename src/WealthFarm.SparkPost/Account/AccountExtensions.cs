@@ -60,7 +60,7 @@ namespace WealthFarm.SparkPost
             {
                 Method = HttpMethod.Put,
                 Uri = new Uri(client.Configuration.Endpoint, AccountPath),
-                Content = account.ToJsonContent()
+                Content = account
             };
 
             var response = await client.SendAsync(request);

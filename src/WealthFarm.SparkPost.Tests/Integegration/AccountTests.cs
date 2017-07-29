@@ -5,7 +5,7 @@ using Xunit;
 
 namespace WealthFarm.SparkPost.Tests.Integegration
 {
-    public class Account : BaseTest
+    public class AccountTests : BaseTest
     {
         [Fact]
         public async Task GetAccount()

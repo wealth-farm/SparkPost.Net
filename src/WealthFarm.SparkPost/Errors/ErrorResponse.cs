@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace WealthFarm.SparkPost
 {
@@ -11,6 +13,7 @@ namespace WealthFarm.SparkPost
         ///     Gets or sets the response errors.
         /// </summary>
         /// <value>A list of API errors.</value>
+        [JsonProperty("errors")]
         public IEnumerable<Error> Errors { get; internal set; }
     }
 }

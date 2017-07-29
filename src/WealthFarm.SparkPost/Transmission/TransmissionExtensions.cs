@@ -5,11 +5,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using WealthFarm.SparkPost.Exceptions;
 
-namespace WealthFarm.SparkPost.Transmission
+namespace WealthFarm.SparkPost
 {
+    /// <summary>
+    ///     Extension methods for transmissions.
+    /// </summary>
     public static class TransmissionExtensions
     {
-        private const string TransmissionPath = "/transmission";
+        private const string TransmissionPath = "/api/v1/transmissions";
 
         /// <summary>
         ///     Sets the recipients for a transmission.
@@ -17,7 +20,7 @@ namespace WealthFarm.SparkPost.Transmission
         /// <param name="transmission">The transmission.</param>
         /// <param name="recipients">A list of recipients.</param>
         /// <returns>The transmission instance, which can be used for chaining.</returns>
-        private static Transmission WithRecipients(this Transmission transmission, IEnumerable<Recipient> recipients)
+        public static Transmission WithRecipients(this Transmission transmission, IEnumerable<Recipient> recipients)
         {
             transmission.Recipients = recipients;
             return transmission;
@@ -29,7 +32,7 @@ namespace WealthFarm.SparkPost.Transmission
         /// <param name="transmission">The transmission.</param>
         /// <param name="listId">The recipient list ID.</param>
         /// <returns>The transmission instance, which can be used for chaining.</returns>
-        private static Transmission WithRecipientList(this Transmission transmission, string listId)
+        public static Transmission WithRecipientList(this Transmission transmission, string listId)
         {
             transmission.Recipients = new RecipientList {ListId = listId};
             return transmission;
@@ -44,17 +47,18 @@ namespace WealthFarm.SparkPost.Transmission
         public static async Task<TransmissionResult> CreateTransmission(this IClient client, Transmission transmisison,
             int? maxRecipientErrors = null)
         {
+            var query = maxRecipientErrors.HasValue? $"?num_rcpt_errors={maxRecipientErrors}" : string.Empty;
             var request = new Request
             {
-                Uri = new Uri($"{TransmissionPath}?num_rcpt_errors={maxRecipientErrors}"),
+                Uri = new Uri(client.Configuration.Endpoint, $"{TransmissionPath}{query}"),
                 Method = HttpMethod.Post,
-                Content = transmisison.ToJsonContent()
+                Content = transmisison
             };
 
             var response = await client.SendAsync(request);
 
             if (response.StatusCode != HttpStatusCode.OK)
-                throw new SparkPostException("Get account failed", (int) response.StatusCode, response.Errors);
+                throw new SparkPostException("Create transmission failed", (int) response.StatusCode, response.Errors);
 
             return await response.ReadContentAsync<TransmissionResult>();
         }
