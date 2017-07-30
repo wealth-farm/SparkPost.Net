@@ -25,7 +25,7 @@ namespace WealthFarm.SparkPost.Tests.Integegration
                 {
                     Address = new Address
                     {
-                        Name = "Buggs Bunny",
+                        Name = "Bugs Bunny",
                         Email = Email
                     }
                 }
