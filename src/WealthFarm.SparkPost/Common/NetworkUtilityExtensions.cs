@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.IO;
+using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -14,12 +15,18 @@ namespace WealthFarm.SparkPost
         /// </summary>
         /// <returns>A JSON-y content.</returns>
         /// <param name="entity">Entity.</param>
-        public static StringContent ToJsonContent(this object entity)
+        /// <param name="serializer">The serializer to use.</param>
+        public static StringContent ToJsonContent(this object entity, JsonSerializer serializer)
         {
             if (entity == null)
                 return null;
 
-            return new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+            using (var sw = new StringWriter())
+            using (var writer = new JsonTextWriter(sw))
+            {
+                serializer.Serialize(writer, entity);
+                return new StringContent(sw.ToString(), Encoding.UTF8, "application/json");
+            }
         }
     }
 }

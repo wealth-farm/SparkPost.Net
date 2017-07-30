@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace WealthFarm.SparkPost.Transmission
+namespace WealthFarm.SparkPost
 {
     /// <summary>
     ///     The result from sending a transmission.
@@ -10,6 +10,7 @@ namespace WealthFarm.SparkPost.Transmission
         /// <summary>
         ///     Gets or sets the transmission ID.
         /// </summary>
+        [JsonProperty("id")]
         public string Id { get; set; }
 
         /// <summary>

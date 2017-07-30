@@ -1,4 +1,4 @@
-﻿namespace WealthFarm.SparkPost.Transmission
+﻿namespace WealthFarm.SparkPost
 {
     /// <summary>
     ///     Transmission content is a base class for transmission content types.

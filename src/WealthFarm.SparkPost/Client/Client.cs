@@ -53,14 +53,13 @@ namespace WealthFarm.SparkPost
         /// </summary>
         /// <returns>A client response.</returns>
         /// <param name="request">The request.</param>
-        /// <typeparam name="IContentType">The response entity type.</typeparam>
         public async Task<Response> SendAsync(Request request)
         {
             var message = new HttpRequestMessage
             {
                 Method = request.Method,
                 RequestUri = request.Uri,
-                Content = request.Content.ToJsonContent()
+                Content = request.Content.ToJsonContent(_serializer)
             };
 
             var response = await _http.SendAsync(message, request.CompletionOption, request.CancellationToken);

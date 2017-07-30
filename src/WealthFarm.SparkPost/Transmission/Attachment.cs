@@ -1,4 +1,6 @@
-﻿namespace WealthFarm.SparkPost.Transmission
+﻿using Newtonsoft.Json;
+
+namespace WealthFarm.SparkPost
 {
     /// <summary>
     ///     Attachment is used for attaching files and inline-images to a transmission.
@@ -17,6 +19,7 @@
         ///     <c>cid:THIS_NAME</c>, where THIS_NAME is the value of this property.
         ///     The name must be unique within the content.inline_images array.
         /// </remarks>
+        [JsonProperty("name")]
         public string Name { get; set; }
 
         /// <summary>
@@ -31,6 +34,7 @@
         ///     This is the MIME type of the image; e.g., image/jpeg. The value will apply as-is
         ///     to the Content-Type header of the generated MIME part for the image.
         /// </remarks>
+        [JsonProperty("type")]
         public string Type { get; set; }
 
         /// <summary>
@@ -40,6 +44,7 @@
         ///     The content of the attachment or inline image as a Base64 encoded string. The string should not contain
         ///     line breaks (<c>\r\n</c>).
         /// </remarks>
+        [JsonProperty("data")]
         public string Data { get; set; }
     }
 }

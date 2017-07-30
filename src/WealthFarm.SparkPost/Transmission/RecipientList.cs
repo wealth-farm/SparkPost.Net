@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace WealthFarm.SparkPost.Transmission
+namespace WealthFarm.SparkPost
 {
     /// <summary>
     ///     RecipientList represents a list of transmission recipients.
