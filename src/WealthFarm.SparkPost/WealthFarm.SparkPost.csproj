@@ -3,7 +3,7 @@
     <TargetFramework>netstandard1.1</TargetFramework>
     <PackOnBuild>true</PackOnBuild>
     <PackageId>WealthFarm.SparkPost</PackageId>
-    <PackageVersion>0.1.1-alpha</PackageVersion>
+    <PackageVersion>0.1.2-alpha</PackageVersion>
     <Authors>Wealth Farm, Daniel Merritt</Authors>
     <Description>A .NET client library for SparkPost.</Description>
   </PropertyGroup>
