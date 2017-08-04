@@ -22,7 +22,7 @@ namespace WealthFarm.SparkPost
         /// <summary>
         ///     Gets or sets the number of accepted recipients.
         /// </summary>
-        [JsonProperty("total_accepted_recipients.")]
+        [JsonProperty("total_accepted_recipients")]
         public int TotalAcceptedRecipients { get; set; }
     }
 }
