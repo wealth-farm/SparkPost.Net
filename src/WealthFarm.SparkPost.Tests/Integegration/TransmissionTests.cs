@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
 
 namespace WealthFarm.SparkPost.Tests.Integegration
-{
+{   
     public class TransmissionTests : BaseTest
     {
         [Fact]
@@ -32,9 +34,8 @@ namespace WealthFarm.SparkPost.Tests.Integegration
             };
 
             transmission.WithRecipients(recipients);
-
-            var result = await Client.CreateTransmission(transmission);
             
+            var result = await Client.CreateTransmission(transmission);
             result.Id.Should().NotBeNullOrEmpty();
             result.TotalAcceptedRecipients.Should().Be(1);
             result.TotalRejectedRecipients.Should().Be(0);

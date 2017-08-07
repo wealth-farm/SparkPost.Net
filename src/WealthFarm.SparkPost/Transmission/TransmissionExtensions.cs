@@ -60,7 +60,7 @@ namespace WealthFarm.SparkPost
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new SparkPostException("Create transmission failed", (int) response.StatusCode, response.Errors);
 
-            return await response.ReadContentAsync<TransmissionResult>();
+            return (await response.ReadContentAsync<SingleResult<TransmissionResult>>()).Results;
         }
     }
 }
